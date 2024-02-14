@@ -10,8 +10,9 @@ async function getBaseData() {
 
         const milestones = Object.keys(data).filter(key => key !== "Milestone");
         milestones.forEach((milestone, index) => {
-            const itemsWithDates = data[milestone].map(itemWithDate => {
-                const [itemName, startDateString, endDateString] = itemWithDate.split("_");
+        
+        const itemsWithDates = data[milestone].map(itemWithDate => {
+        const [itemName, startDateString, endDateString] = itemWithDate.split("_");
         
                 const startDate = new Date(startDateString).getTime();
                 const endDate = new Date(endDateString).getTime();
@@ -39,7 +40,7 @@ async function getBaseData() {
             end: milestoneEnd
         };
         
-        const requirements = itemsWithDates.map((item, i) => ({
+        const requirements = itemsWithDates.map((item) => ({
             name: item.name,
             id: item.name.toLowerCase(),
             parent: milestone.toLowerCase(),
