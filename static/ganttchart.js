@@ -9,7 +9,7 @@ today.setUTCMilliseconds(0);
 document.addEventListener('DOMContentLoaded', async function() {
    try{
     const base_data = await getBaseData();
-    console.log(base_data);
+    // console.log(base_data);
     Highcharts.ganttChart('container', {
 
         title: {
