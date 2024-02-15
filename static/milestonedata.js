@@ -7,7 +7,6 @@ async function getBaseData() {
         }
         const data = await response.json();
         const base_data = []
-
         const milestones = Object.keys(data).filter(key => key !== "Milestone");
         milestones.forEach((milestone, index) => {
         
@@ -16,7 +15,6 @@ async function getBaseData() {
         
                 const startDate = new Date(startDateString).getTime();
                 const endDate = new Date(endDateString).getTime();
-        
                 return {
                     name: itemName,
                     startDate : startDate,
@@ -24,12 +22,12 @@ async function getBaseData() {
                 };
             });
 
-        // console.log(milestone)
+        // console.log(milestones)
         const milestoneStart = Math.min(...itemsWithDates.map(item => new Date(item.startDate).getTime()));
         // console.log(milestoneStart);
         const milestoneEnd = Math.max(...itemsWithDates.map(item =>  new Date(item.endDate).getTime()));
         // console.log(milestoneEnd);
-
+        // console.log(milestone)
         const milestoneObj = {
             name: milestone,
             id: milestone.toLowerCase(),
@@ -40,7 +38,9 @@ async function getBaseData() {
             end: milestoneEnd
         };
         
-        const requirements = itemsWithDates.map((item) => ({
+        const requirements = itemsWithDates
+        .filter(item => item.name.trim() !== '')
+        .map((item) => ({
             name: item.name,
             id: item.name.toLowerCase(),
             parent: milestone.toLowerCase(),
@@ -52,6 +52,7 @@ async function getBaseData() {
         }));
     
         base_data.push(milestoneObj, ...requirements);
+        // console.log(base_data)
     });
 
 
@@ -167,7 +168,9 @@ async function getBaseData() {
         end: 1711645600000
     }]
         console.log(base_data); 
-        return sample_data; 
+        console.log(sample_data);
+        // return base_data;
+        return base_data; 
     } catch (error) {
         console.error('Error occurred:', error);
         throw error; 
