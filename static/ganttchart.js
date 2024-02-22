@@ -11,10 +11,9 @@ document.addEventListener('DOMContentLoaded', async function() {
     const base_data = await getBaseData();
     // console.log(base_data);
     Highcharts.ganttChart('container', {
-
-        title: {
-            text: 'RoadMaps'
-        },
+        // title: {
+        //     text: 'RoadMaps'
+        // },
         xAxis: {
             min: today.getTime() - (2 * day),
             max: today.getTime() + (32 * day)
