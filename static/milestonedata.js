@@ -167,8 +167,8 @@ async function getBaseData() {
         start: 1709329900000,
         end: 1711645600000
     }]
-        console.log(base_data); 
-        console.log(sample_data);
+        //console.log(base_data); 
+        //console.log(sample_data);
         // return base_data;
         return base_data; 
     } catch (error) {
