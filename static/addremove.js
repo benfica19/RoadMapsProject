@@ -51,7 +51,7 @@ addtask.addEventListener('click', async function() {
     // console.log(endDate)
 
     // Send the task data to the API
-    fetch('https://script.google.com/macros/s/AKfycbyZ_FI5IYBx75tvx0Own-_PqO-hsM2SRjGADojN3Vwp7F7Cd3ceh8d0b2YgpMntlkunKw/exec?milestone=' + encodeURIComponent(milestone) + '&task=' + encodeURIComponent(taskName) + '&startDate=' + encodeURIComponent(startDate) + '&endDate=' + encodeURIComponent(endDate))
+    fetch('https://script.google.com/macros/s/AKfycbzHmIxyXBROpNuN0HPsAtJU4VClyJ2PtcSD4YHv1MuNQINQdaLDc8xnAElNSZaVGUkLdQ/exec?milestone=' + encodeURIComponent(milestone) + '&task=' + encodeURIComponent(taskName) + '&startDate=' + encodeURIComponent(startDate) + '&endDate=' + encodeURIComponent(endDate))
     .then(response => {
         if (response.ok) {
             console.log('Task added successfully');
