@@ -72,6 +72,17 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         },
+        plotOptions: {
+            series: {
+                dragDrop: {
+                    draggableX: true,
+                    draggableY: true,
+                    dragMinY: 0,
+                    dragMaxY: 2,
+                    dragPrecisionX: day / 3 // Drag bye eight hours with each shift.
+                }
+            }
+        },
         series: [{
             name: 'Project 1',
             data: base_data,
