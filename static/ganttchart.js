@@ -50,13 +50,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         accessibility: {
             point: {
                 descriptionFormatter: function (point) {
-                    const dependency = point.dependency &&
-                            point.series.chart.get(point.dependency).name,
-                        dependsOn = dependency ? ' Depends on ' + dependency + '.' : '';
-    
+                    // const dependency = point.dependency &&
+                    //         point.series.chart.get(point.dependency).name,
+                    //     dependsOn = dependency ? ' Depends on ' + dependency + '.' : '';
+                    // '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}.{dependsOn}',
+                    //  { point, dependsOn }
                     return Highcharts.format(
-                        '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}.{dependsOn}',
-                        { point, dependsOn }
+                        '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}',
+                        { point }
                     );
                 }
             },
@@ -72,9 +73,39 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
         },
+        plotOptions: {
+            series: {
+                dragDrop: {
+                    draggableX: true,
+                    draggableY: true,
+                    dragMinY: 0,
+                    dragMaxY: 2,
+                    dragPrecisionX: day/4
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    cursor: 'default',
+                    pointerEvents: 'none'
+                }
+            }
+        },
         series: [{
-            name: 'Project 1',
+            name: 'Change to Table Name',
             data: base_data,
+            point: {
+                events: {
+                    update: function (event) {
+                    const startDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x);
+                    const endDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x2);
+                
+                    console.log('New start date:', startDate);
+                    console.log('New end date:', endDate);
+                    }
+                }
+            }
         }]
     });    
    }

@@ -11,15 +11,32 @@
     <script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
     <script src="https://code.highcharts.com/gantt/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/gantt/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/draggable-points.js"></script>
 </head>
 <body>
     <h1 style="text-align: center;">RoadMaps</h1>
+    <div style="margin-left: 10px;">
+    <div>Select the Table</div>
+    <select class="form-select" aria-label="Default select example">
+      <option selected>Select the Table</option>
+      <option value="1">RoadMaps Tool Team Updates</option>
+      <option value="2">New 📋 Product Roadmap</option>
+    </select>
+    </div>
+
     <!-- Button trigger Adding Task -->
-    <button style="margin-left: 10%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id ="btnShowDialog">
+    <div style="margin-top: 10px;">
+    <button style="margin-left: 10px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id ="btnShowDialog">
     Add Task
     </button>
-    <div id="container"></div>
+    <button style="margin-left: 10px;" type="button" class="btn btn-primary">
+      Remove Task
+    </button>
+    </div>
 
+
+
+    <div id="container"></div>
     <!-- Modal box to add task -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -46,6 +63,7 @@
                     <input type="date" class="form-control" id="endDate">
                   </div>
             </div>
+      
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" id="addtask">Add Task</button>
