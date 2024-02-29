@@ -4,3 +4,7 @@
     max-height: fit-content;
 
 }
+
+.form-select {
+    width: 60%; 
+}
