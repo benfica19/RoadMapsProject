@@ -1,7 +1,10 @@
+// OLD API Fecting Data from Google Sheet
+// "https://script.googleusercontent.com/macros/echo?user_content_key=L5bvWYL5BdMGGakOlhbJ-KWEoutX8cxDlTutO1oH9VwZEJvbuMsmvpfRCFS-3-1Lt4eadTsWxCLWGQFpj40UOT9UdfTxKKiMm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnHEfkPUxZOxPx3NellYdZvtRwilnqeCLOTkcA2v074Gs-5E0r6SclJaiD3RVR_bBCUqvS5k5WptqYgSsKpU5_PnVNsbLu3flfdz9Jw9Md8uu&lib=MxHd7AEelJsYyiIUxj9Djq-BRxnWXSPyf"
+//tables/busF4R7ZbZefstfDnZPk4Q
 
-async function getBaseData() {
+async function getBaseData(tableID) {
     try {
-        const response = await fetch("https://script.googleusercontent.com/macros/echo?user_content_key=L5bvWYL5BdMGGakOlhbJ-KWEoutX8cxDlTutO1oH9VwZEJvbuMsmvpfRCFS-3-1Lt4eadTsWxCLWGQFpj40UOT9UdfTxKKiMm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnHEfkPUxZOxPx3NellYdZvtRwilnqeCLOTkcA2v074Gs-5E0r6SclJaiD3RVR_bBCUqvS5k5WptqYgSsKpU5_PnVNsbLu3flfdz9Jw9Md8uu&lib=MxHd7AEelJsYyiIUxj9Djq-BRxnWXSPyf");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwNlaLFgUIx0clp3LJ4srwGACsdXLG815nPqk70jvytOSH5evQwUgc-qChwrvil6yWT/exec?tableid="+tableID);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

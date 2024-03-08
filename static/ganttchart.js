@@ -6,113 +6,116 @@ today.setUTCMinutes(0);
 today.setUTCSeconds(0);
 today.setUTCMilliseconds(0);
 
-document.addEventListener('DOMContentLoaded', async function() {
-   try{
-    const base_data = await getBaseData();
-    // console.log(base_data);
-    Highcharts.ganttChart('container', {
-
-        title: {
-            text: 'RoadMaps'
-        },
-        xAxis: {
-            min: today.getTime() - (2 * day),
-            max: today.getTime() + (32 * day)
-        },
-        yAxis: {
-            uniqueNames: true
-        },
-        navigator: {
-            enabled: true,
-            liveRedraw: true,
-            series: {
-                type: 'gantt',
-                pointPlacement: 0.5,
-                pointPadding: 0.25,
-                accessibility: {
-                    enabled: false
-                }
+async function initilizeganttchart(selectedTableId){
+    try{
+        const base_data = await getBaseData(selectedTableId);
+        // console.log(base_data);
+        Highcharts.ganttChart('container', {
+    
+            title: {
+                text: 'RoadMaps'
+            },
+            xAxis: {
+                min: today.getTime() - (2 * day),
+                max: today.getTime() + (32 * day),
             },
             yAxis: {
-                min: 0,
-                max: 3,
-                reversed: true,
-                categories: []
-            }
-        },
-        scrollbar: {
-            enabled: true
-        },
-        rangeSelector: {
-            enabled: true,
-            selected: 0
-        },
-        accessibility: {
-            point: {
-                descriptionFormatter: function (point) {
-                    // const dependency = point.dependency &&
-                    //         point.series.chart.get(point.dependency).name,
-                    //     dependsOn = dependency ? ' Depends on ' + dependency + '.' : '';
-                    // '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}.{dependsOn}',
-                    //  { point, dependsOn }
-                    return Highcharts.format(
-                        '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}',
-                        { point }
-                    );
-                }
+                uniqueNames: true
             },
-            series: {
-                descriptionFormat: '{name}'
-            }
-        },
-        lang: {
-            accessibility: {
-                axis: {
-                    xAxisDescriptionPlural: 'The chart has a two-part X axis showing time in both week numbers and days.',
-                    yAxisDescriptionPlural: 'The chart has one Y axis showing task categories.'
-                }
-            }
-        },
-        plotOptions: {
-            series: {
-                dragDrop: {
-                    draggableX: true,
-                    draggableY: true,
-                    dragMinY: 0,
-                    dragMaxY: 2,
-                    dragPrecisionX: day/4
-                }
-            },
-            dataLabels: {
+            navigator: {
+                top:80,
                 enabled: true,
-                format: '{point.name}',
-                style: {
-                    cursor: 'default',
-                    pointerEvents: 'none'
+                liveRedraw: true,
+                series: {
+                    type: 'gantt',
+                    pointPlacement: 0.5,
+                    pointPadding: 0.25,
+                    accessibility: {
+                        enabled: false
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    max: 3,
+                    reversed: true,
+                    categories: []
                 }
-            }
-        },
-        series: [{
-            name: 'Change to Table Name',
-            data: base_data,
-            point: {
-                events: {
-                    update: function (event) {
-                    const startDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x);
-                    const endDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x2);
-                
-                    console.log('New start date:', startDate);
-                    console.log('New end date:', endDate);
+            },
+            scrollbar: {
+                enabled: true
+            },
+            rangeSelector: {
+                enabled: true,
+                selected: 0
+            },
+            accessibility: {
+                point: {
+                    descriptionFormatter: function (point) {
+                        // const dependency = point.dependency &&
+                        //         point.series.chart.get(point.dependency).name,
+                        //     dependsOn = dependency ? ' Depends on ' + dependency + '.' : '';
+                        // '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}.{dependsOn}',
+                        //  { point, dependsOn }
+                        return Highcharts.format(
+                            '{point.yCategory}. Start {point.x:%Y-%m-%d}, end {point.x2:%Y-%m-%d}',
+                            { point }
+                        );
+                    }
+                },
+                series: {
+                    descriptionFormat: '{name}'
+                }
+            },
+            lang: {
+                accessibility: {
+                    axis: {
+                        xAxisDescriptionPlural: 'The chart has a two-part X axis showing time in both week numbers and days.',
+                        yAxisDescriptionPlural: 'The chart has one Y axis showing task categories.'
                     }
                 }
-            }
-        }]
-    });    
-   }
-   catch(error){
-    console.error('Error occurred:', error);
-   }
-});
+            },
+            plotOptions: {
+                series: {
+                    dragDrop: {
+                        draggableX: true,
+                        draggableY: true,
+                        dragMinY: 0,
+                        dragMaxY: 2,
+                        dragPrecisionX: day/4
+                    }
+                },
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}',
+                    style: {
+                        cursor: 'default',
+                        pointerEvents: 'none'
+                    }
+                }
+            },
+            series: [{
+                name: 'Change to Table Name',
+                data: base_data,
+                point: {
+                    events: {
+                        update: function (event) {
+                        const startDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x);
+                        const endDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x2);
+                    
+                        console.log('New start date:', startDate);
+                        console.log('New end date:', endDate);
+                        }
+                    }
+                }
+            }]
+        });    
+       }
+       catch(error){
+        console.error('Error occurred:', error);
+       }
+}
+
+document.addEventListener('DOMContentLoaded', initilizeganttchart("tables/busF4R7ZbZefstfDnZPk4Q"));
 
 
 
