@@ -44,14 +44,19 @@ addtask.addEventListener('click', async function() {
     let milestone = document.getElementById('milestones').value;
     let startDate = document.getElementById('startDate').value;
     let endDate = document.getElementById('endDate').value;
+    let newmilestone = document.getElementById('exampleFormControlInput2').value;
 
     // console.log(milestone)
     // console.log(taskName)
     // console.log(startDate)
     // console.log(endDate)
 
+    let milestonefinal = newmilestone.length !== 0 ? newmilestone : milestone;
+
+    console.log(milestonefinal);
+
     // Send the task data to the API
-    fetch('https://script.google.com/macros/s/AKfycbzHmIxyXBROpNuN0HPsAtJU4VClyJ2PtcSD4YHv1MuNQINQdaLDc8xnAElNSZaVGUkLdQ/exec?milestone=' + encodeURIComponent(milestone) + '&task=' + encodeURIComponent(taskName) + '&startDate=' + encodeURIComponent(startDate) + '&endDate=' + encodeURIComponent(endDate))
+    fetch('https://script.google.com/macros/s/AKfycbzHmIxyXBROpNuN0HPsAtJU4VClyJ2PtcSD4YHv1MuNQINQdaLDc8xnAElNSZaVGUkLdQ/exec?milestone=' + encodeURIComponent(milestonefinal) + '&task=' + encodeURIComponent(taskName) + '&startDate=' + encodeURIComponent(startDate) + '&endDate=' + encodeURIComponent(endDate))
     .then(response => {
         if (response.ok) {
             console.log('Task added successfully');
