@@ -9,18 +9,26 @@ today.setUTCMilliseconds(0);
 async function initilizeganttchart(selectedTableId){
     try{
         const base_data = await getBaseData(selectedTableId);
+        console.log("Chart Data");
+        console.log(base_data);
+        const startOfWeek = new Date(today);
+        startOfWeek.setDate(today.getDate() - today.getDay()); // Set to Sunday of the current week
+        const endOfWeek = new Date(today);
+        endOfWeek.setDate(today.getDate() - today.getDay() + 6); 
+
+
+
         // console.log(base_data);
         Highcharts.ganttChart('container', {
-    
             title: {
                 text: 'RoadMaps'
             },
             xAxis: {
-                min: today.getTime() - (2 * day),
-                max: today.getTime() + (32 * day),
-            },
-            yAxis: {
-                uniqueNames: true
+                currentDateIndicator: {
+                color: '#2caffe',
+                dashStyle: 'ShortDot',
+                width: 2
+            }
             },
             navigator: {
                 top:80,
@@ -38,15 +46,30 @@ async function initilizeganttchart(selectedTableId){
                     min: 0,
                     max: 3,
                     reversed: true,
-                    categories: []
-                }
+                    categories: [],
+                    uniqueNames: true
+                },
+                xAxis: [{
+                    min: startOfWeek.getTime(),
+                    max: endOfWeek.getTime(),
+                    custom: {
+                        today,
+                        weekendPlotBands: true
+                    },
+                }]
             },
             scrollbar: {
                 enabled: true
             },
             rangeSelector: {
                 enabled: true,
-                selected: 0
+                selected: 0, // Set the default range to 1 week
+                buttons: [{
+                    type: 'month',
+                    count: 1,
+                    text: '1w'
+                }],
+                inputEnabled: true // Disable manual input
             },
             accessibility: {
                 point: {
@@ -90,6 +113,11 @@ async function initilizeganttchart(selectedTableId){
                     style: {
                         cursor: 'default',
                         pointerEvents: 'none'
+                    }
+                },
+                gantt: {
+                    pathfinder: {
+                      lineWidth: 2
                     }
                 }
             },

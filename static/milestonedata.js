@@ -2,9 +2,11 @@
 // "https://script.googleusercontent.com/macros/echo?user_content_key=L5bvWYL5BdMGGakOlhbJ-KWEoutX8cxDlTutO1oH9VwZEJvbuMsmvpfRCFS-3-1Lt4eadTsWxCLWGQFpj40UOT9UdfTxKKiMm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnHEfkPUxZOxPx3NellYdZvtRwilnqeCLOTkcA2v074Gs-5E0r6SclJaiD3RVR_bBCUqvS5k5WptqYgSsKpU5_PnVNsbLu3flfdz9Jw9Md8uu&lib=MxHd7AEelJsYyiIUxj9Djq-BRxnWXSPyf"
 //tables/busF4R7ZbZefstfDnZPk4Q
 
+// API endpoint with dependency.
+//https://script.google.com/macros/s/AKfycbybBMWs3AZYRejwnkKrjhn7_uEgFlr0kr9Pe1rBFs8vcCMy_T5KEQWqwbHE5qorbBgq/exec?tableid=tables/busF4R7ZbZefstfDnZPk4Q
 async function getBaseData(tableID) {
     try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwNlaLFgUIx0clp3LJ4srwGACsdXLG815nPqk70jvytOSH5evQwUgc-qChwrvil6yWT/exec?tableid="+tableID);
+        const response = await fetch("https://script.google.com/macros/s/AKfycbybBMWs3AZYRejwnkKrjhn7_uEgFlr0kr9Pe1rBFs8vcCMy_T5KEQWqwbHE5qorbBgq/exec?tableid="+tableID);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -15,33 +17,34 @@ async function getBaseData(tableID) {
         milestones.forEach((milestone, index) => {
         
         const itemsWithDates = data[milestone].map(itemWithDate => {
-        const [itemName, startDateString, endDateString] = itemWithDate.split("_");
+        const [id,itemName, startDateString, endDateString, dependency = ""] = itemWithDate.split("_");
         
                 const startDate = new Date(startDateString).getTime();
                 const endDate = new Date(endDateString).getTime();
                 return {
                     name: itemName,
                     startDate : startDate,
-                    endDate : endDate
+                    endDate : endDate,
+                    dependency : dependency,
+                    rowid:id
                 };
-            });
+        });
 
         // console.log(milestones)
         const milestoneStart = Math.min(...itemsWithDates.map(item => new Date(item.startDate).getTime()));
-        // console.log(milestoneStart);
         const milestoneEnd = Math.max(...itemsWithDates.map(item =>  new Date(item.endDate).getTime()));
-        // console.log(milestoneEnd);
         // console.log(milestone)
         const milestoneObj = {
             name: milestone,
+            // id: milestone.toLowerCase(),
             id: milestone.toLowerCase(),
             start: milestoneStart,
             completed: {
                 amount: 0
             },
-            end: milestoneEnd
+            end: milestoneEnd,
         };
-
+        // console.log(itemsWithDates)
         const requirements = itemsWithDates
         .filter(item => item.name.trim() !== "")
         .map((item) => ({
@@ -52,9 +55,11 @@ async function getBaseData(tableID) {
             completed: {
                 amount: 0
             },
-            end: item.endDate
+            end: item.endDate,
+            dependency: item.dependency.toLowerCase(),
+            rowid:item.rowid
         }));
-    
+        // console.log(requirements)
         base_data.push(milestoneObj, ...requirements);
         // console.log(base_data)
     });
