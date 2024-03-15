@@ -6,7 +6,7 @@
 //https://script.google.com/macros/s/AKfycbybBMWs3AZYRejwnkKrjhn7_uEgFlr0kr9Pe1rBFs8vcCMy_T5KEQWqwbHE5qorbBgq/exec?tableid=tables/busF4R7ZbZefstfDnZPk4Q
 async function getBaseData(tableID) {
     try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbybBMWs3AZYRejwnkKrjhn7_uEgFlr0kr9Pe1rBFs8vcCMy_T5KEQWqwbHE5qorbBgq/exec?tableid="+tableID);
+        const response = await fetch("https://script.google.com/macros/s/AKfycbybBMWs3AZYRejwnkKrjhn7_uEgFlr0kr9Pe1rBFs8vcCMy_T5KEQWqwbHE5qorbBgq/exec/exec?tableid="+tableID);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -17,8 +17,8 @@ async function getBaseData(tableID) {
         milestones.forEach((milestone, index) => {
         
         const itemsWithDates = data[milestone].map(itemWithDate => {
-        const [id,itemName, startDateString, endDateString, dependency = ""] = itemWithDate.split("_");
-        
+        const [id,itemName, startDateString, endDateString, dependency = ""] = itemWithDate.split("|");
+                console.log(id+" "+itemName+" "+startDateString+" "+endDateString);
                 const startDate = new Date(startDateString).getTime();
                 const endDate = new Date(endDateString).getTime();
                 return {
