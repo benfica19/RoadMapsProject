@@ -127,11 +127,37 @@ async function initilizeganttchart(selectedTableId){
                 point: {
                     events: {
                         update: function (event) {
-                        const startDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x);
-                        const endDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x2);
-                    
-                        console.log('New start date:', startDate);
-                        console.log('New end date:', endDate);
+                        let startDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x);
+                        let endDate = Highcharts.dateFormat('%Y-%m-%d', event.target.x2);
+                        startDate = new Date(startDate);
+                        endDate = new Date(endDate);
+                        const rowid = event.target.rowid;
+                        const startdateDict = {
+                            year: startDate.getFullYear(),
+                            month: startDate.getMonth() + 1, // Adding 1 because getMonth() returns zero-based month (0-11)
+                            day: startDate.getDate()
+                          };
+                          const enddateDict = {
+                            year: endDate.getFullYear(),
+                            month: endDate.getMonth() + 1, // Adding 1 because getMonth() returns zero-based month (0-11)
+                            day: endDate.getDate()
+                          };
+                        // Send the task data to the API
+                        
+                        fetch('https://script.google.com/macros/s/AKfycbyMuvRP45kgyCsXdBKOcy0XlsnfiGejrVDZ8Ggy4XyVOAb1iOZIqONfQ_TW99tMFou3kA/exec?rowName=' + rowid + '&startDate=' + JSON.stringify(startdateDict) + '&endDate=' + JSON.stringify(enddateDict))
+                        .then(response => {
+                            if (response.ok) {
+                                console.log('Task added successfully');
+                            } else {
+                                console.error('Failed to add task');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                        console.log('rowid is ', rowid);
+                        console.log('New start date:', startdateDict);
+                        console.log('New end date:', enddateDict);
                         }
                     }
                 }
