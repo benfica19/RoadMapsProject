@@ -28,8 +28,8 @@ async function fetchTableList() {
 //Triggered when user selected a new table using the dropdown
 function handleTableSelection() {
     var selectElement = document.getElementById("tableselection");
-    var selectedTableId = selectElement.value; 
+    var selectedTableId = selectElement.value;
     // getBaseData(selectedTableId);
-    initilizeganttchart(selectedTableId);
+    initilizeganttchart(selectedTableId, selectElement.text);
     console.log("Selected table ID:", selectedTableId);
   }

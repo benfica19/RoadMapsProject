@@ -6,7 +6,7 @@ today.setUTCMinutes(0);
 today.setUTCSeconds(0);
 today.setUTCMilliseconds(0);
 
-async function initilizeganttchart(selectedTableId){
+async function initilizeganttchart(selectedTableId, selectedTableName){
     try{
         const base_data = await getBaseData(selectedTableId);
         console.log("Chart Data");
@@ -15,8 +15,6 @@ async function initilizeganttchart(selectedTableId){
         startOfWeek.setDate(today.getDate() - today.getDay()); // Set to Sunday of the current week
         const endOfWeek = new Date(today);
         endOfWeek.setDate(today.getDate() - today.getDay() + 6); 
-
-
 
         // console.log(base_data);
         Highcharts.ganttChart('container', {
@@ -117,12 +115,28 @@ async function initilizeganttchart(selectedTableId){
                 },
                 gantt: {
                     pathfinder: {
-                      lineWidth: 2
+                      lineWidth: 1,
+                      startMarker: {
+                        enabled: true,
+                        symbol: 'circle',
+                        rotation: 0,
+                        radius: 3
+                        },
+                    endMarker: {
+                        enabled: true,
+                        symbol: 'diamond',
+                        radius: 3
+                        },
+                    states:{
+                            hover: {
+                                lineWidthPlus: 2 
+                        }
+                      }
                     }
                 }
             },
             series: [{
-                name: 'Change to Table Name',
+                name: selectedTableName,
                 data: base_data,
                 point: {
                     events: {
